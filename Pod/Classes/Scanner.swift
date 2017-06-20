@@ -134,15 +134,15 @@ extension Scanner: CBCentralManagerDelegate {
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         let identifier = peripheral.identifier.uuidString
 
-        if let beacon = self.discoveredBeacons[identifier] {
-            beacon.parseAdvertisementData(advertisementData, rssi: RSSI.doubleValue)
-        } else {
+//        if let beacon = self.discoveredBeacons[identifier] {
+//            beacon.parseAdvertisementData(advertisementData, rssi: RSSI.doubleValue)
+//        } else {
             if let beacon = Beacon.beaconWithAdvertisementData(advertisementData, rssi: RSSI.doubleValue, identifier: identifier) {
                 beacon.delegate = self
                 self.discoveredBeacons[peripheral.identifier.uuidString] = beacon
                 self.notifyChange()
             }
-        }
+//        }
         
         self.beaconTimers[identifier]?.invalidate()
         self.beaconTimers[identifier] = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(Scanner.beaconTimerExpire(_:)), userInfo: identifier, repeats: false)
