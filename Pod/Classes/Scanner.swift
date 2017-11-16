@@ -38,19 +38,19 @@ open class Scanner: NSObject {
     //Returns an array of Uid objects that are nearby
     open class var nearbyUids: [Uid] {
         get {
-            var uids = [Uid]()
+            return self.beacons.filter({ $0.frames.uid != nil }).map({ Uid(namespace: $0.frames.uid!.namespace, instance: $0.frames.uid!.instance, signalStrength: $0.signalStrength, identifier: $0.identifier)})
             
-            for beacon in self.beacons {
-                if let uidFrame = beacon.frames.uid {
-                    let uid = Uid(namespace: uidFrame.namespace, instance: uidFrame.instance, signalStrength: beacon.signalStrength, identifier: beacon.identifier)
-                    if let tlmFrame = beacon.frames.tlm {
-                        uid.parseTlmFrame(tlmFrame)
-                    }
-                    uids.append(uid)
-                }
-            }
-            
-            return uids
+//            for beacon in self.beacons {
+//                if let uidFrame = beacon.frames.uid {
+//                    let uid = Uid(namespace: uidFrame.namespace, instance: uidFrame.instance, signalStrength: beacon.signalStrength, identifier: beacon.identifier)
+//                    if let tlmFrame = beacon.frames.tlm {
+//                        uid.parseTlmFrame(tlmFrame)
+//                    }
+//                    uids.append(uid)
+//                }
+//            }
+//            
+//            return uids
         }
     }
     
