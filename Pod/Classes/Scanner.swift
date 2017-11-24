@@ -5,7 +5,9 @@ open class Scanner: NSObject {
     //MARK: Public
     open class func start(_ delegate: ScannerDelegate) {
         
-        self.shared.centralManager = CBCentralManager(delegate: self.shared, queue: nil)
+        // Bluetooth
+        let opts = [CBCentralManagerOptionShowPowerAlertKey: true]
+        self.shared.centralManager = CBCentralManager(delegate: self.shared, queue: nil, options: opts)
         self.shared.delegate = delegate
         
     }
